@@ -70,11 +70,11 @@ public class GameOfLife {
 		In in = new In(fileName); // Constructs an In object for reading the input file
 		int rows = Integer.parseInt(in.readLine());
 		int cols = Integer.parseInt(in.readLine());
-		int[][] board = new int[rows + 2][cols + 2];
-		for( int i = 1; i <= rows; i++){
+		int[][] board = new int[rows ][cols ]; // shoud be: int[][] board = new int[rows + 2][cols + 2]; 
+		for( int i = 0; i <= rows; i++){ // should be: int i =1;
 			String curLine = in.readLine();
 			if ( curLine != null){
-			for ( int j =1; j <= curLine.length() ; j++){
+			for ( int j =0; j <= curLine.length() ; j++){ // should be: int j = 1;
 				char c = curLine.charAt(j-1);
 				if( c == '.')
 					board[i][j] = 0;
@@ -93,8 +93,8 @@ public class GameOfLife {
 		int rows = board.length;
 		int cols = board[0].length;
 		int newBoard [][] = new int [rows][cols];
-		for ( int i = 1; i < rows - 1; i++ )
-			for ( int j = 1; j < cols - 1; j++)
+		for ( int i = 0; i < rows - 1; i++ ) // shoud be: int i = 1;
+			for ( int j = 1; j < cols - 1; j++) // should be: int j = 1;
 				newBoard[i][j] = cellValue(board, i, j);
 		return newBoard ;
 	}
