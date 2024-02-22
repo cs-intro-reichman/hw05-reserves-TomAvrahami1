@@ -11,10 +11,10 @@ public class GameOfLife {
 		String fileName = args[0];
 		//// Uncomment the test that you want to execute, and re-compile.
 		//// (Run one test at a time).
-		//// test1(fileName);
-		//// test2(fileName);
+		///test1(fileName);
+		////test2(fileName);
 		//// test3(fileName, 3);
-		//// play(fileName);
+		 play(fileName);
 	}
 	
 	// Reads the data file and prints the initial board.
@@ -29,6 +29,14 @@ public class GameOfLife {
 		int[][] board = read(fileName);
 		//// Write here code that tests that the count and cellValue functions
 		//// are working properly, and returning the correct values.
+		int rows = board.length;
+		int cols = board[0].length;
+		int testboard [][] = new int [rows][cols];
+		for ( int i = 1; i < rows - 1; i++ )
+			for ( int j = 1; j < cols - 1; j++)
+				testboard[i][j] = cellValue(board, i, j);
+		System.out.println("");
+		print(testboard);
 	}
 		
 	// Reads the data file, plays the game for Ngen generations, 
@@ -63,16 +71,32 @@ public class GameOfLife {
 		int rows = Integer.parseInt(in.readLine());
 		int cols = Integer.parseInt(in.readLine());
 		int[][] board = new int[rows + 2][cols + 2];
-		//// Replace the following statement with your code.
-		return null;
+		for( int i = 1; i <= rows; i++){
+			String curLine = in.readLine();
+			if ( curLine != null){
+			for ( int j =1; j <= curLine.length() ; j++){
+				char c = curLine.charAt(j-1);
+				if( c == '.')
+					board[i][j] = 0;
+				if( c == 'x')
+					board[i][j] = 1;
+			}
+		}
+	}
+		return board;
 	}
 	
 	// Creates a new board from the given board, using the rules of the game.
 	// Uses the cellValue(board,i,j) function to compute the value of each 
 	// cell in the new board. Returns the new board.
 	public static int[][] evolve(int[][] board) {
-		//// Replace the following statement with your code.
-		return null;
+		int rows = board.length;
+		int cols = board[0].length;
+		int newBoard [][] = new int [rows][cols];
+		for ( int i = 1; i < rows - 1; i++ )
+			for ( int j = 1; j < cols - 1; j++)
+				newBoard[i][j] = cellValue(board, i, j);
+		return newBoard ;
 	}
 
 	// Returns the value that cell (i,j) should have in the next generation.
@@ -85,8 +109,19 @@ public class GameOfLife {
 	// Assumes that j is at least 1 and at most the number of columns in the board - 1. 
 	// Uses the count(board,i,j) function to count the number of alive neighbors.
 	public static int cellValue(int[][] board, int i, int j) {
-		//// Replace the following statement with your code.
-		return 0;
+		int count = count( board, i, j ); 
+		int cell = board[i][j];
+		if ( cell == 1 && count < 2 ) 
+			return 0;
+		if ( cell ==1 && ( count == 2 || count == 3))
+			return 1;
+		if ( cell == 1 && count > 3 )
+			return 0;
+		if ( cell == 0 && count == 3)
+			return 1;
+		return cell;
+
+
 	}
 	
 	// Counts and returns the number of living neighbors of the given cell
@@ -94,14 +129,39 @@ public class GameOfLife {
 	// Assumes that i is at least 1 and at most the number of rows in the board - 1. 
 	// Assumes that j is at least 1 and at most the number of columns in the board - 1. 
 	public static int count(int[][] board, int i, int j) {
-		//// Replace the following statement with your code.
-		return 0;
+		int neighborscount = 0;
+		if ( board[i-1] [j-1] == 1)
+			neighborscount++;
+		if ( board[i-1] [j] == 1)
+			neighborscount++;
+		if ( board[i-1] [j+1] == 1)
+			neighborscount++; 	
+		if ( board[i] [j-1] == 1)
+			neighborscount++;
+		if ( board[i] [j+1] == 1)
+			neighborscount++;
+		if ( board[i+1] [j-1] == 1)
+			neighborscount++;
+		if ( board[i+1] [j] == 1)
+			neighborscount++;
+		if ( board[i+1] [j+1] == 1)
+			neighborscount++; 	 	
+		return neighborscount;
 	}
 	
 	// Prints the board. Alive and dead cells are printed as 1 and 0, respectively.
     public static void print(int[][] arr) {
-		//// Write your code here.
-	}
+		int rows = arr.length;
+		int cols = arr[0].length;
+		for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+	
 		
     // Displays the board. Living and dead cells are represented by black and white squares, respectively.
     // We use a fixed-size canvas of 900 pixels by 900 pixels for displaying game boards of different sizes.
@@ -135,4 +195,5 @@ public class GameOfLife {
 		StdDraw.show();
 		StdDraw.pause(100); 
 	}
+	
 }
