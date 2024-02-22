@@ -153,8 +153,8 @@ public class GameOfLife {
     public static void print(int[][] arr) {
 		int rows = arr.length;
 		int cols = arr[0].length;
-		for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+		for (int i = 1; i < rows; i++) {
+            for (int j = 1; j < cols; j++) {
                 System.out.print(arr[i][j] + " ");
             }
             System.out.println();
